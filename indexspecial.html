@@ -1,0 +1,116 @@
+<link rel="stylesheet" href="animate.css">
+<div id="menu">
+ <div class="categ"><!--yellow-->
+    <h1 class="animated flip">Gallery</h1><!--animate.css style-->
+      </div>
+  <ul class="products">
+    <li class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <img class="item" src="images/carosel1.jpg">
+      <h2>EXORDIUM
+      
+    </li>
+    <li class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <img class="item" src="images/sessions.jpg">
+      <h2>SESSIONS</h2>
+      </li>
+    <li class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <img class="item" src="images/INAUGURATION.jpg">
+      <h2>INAUGURATION</h2>
+      </li>
+    <li class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <img class="item" src="images/carosel3.jpg">
+      <h2>CULTURALS</h2>
+      </li>
+     <li class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <img class="item" src="images/caro.jpg">
+      <h2>CANDLE LIGHT DINNER</h2>
+      </li>
+     <li class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <img class="item" src="images/carosel2.jpg">
+      <h2>SESSIONS</h2>
+      </li>
+  </ul>
+  *Terms and Conditions Apply
+  </div>
+  <script src="js/jquery-2.1.4.min.js"></script>
+  <script>
+    $("button").on("click", function(){
+        $(this).closest("li")
+         .find("img")
+         .clone()
+         .addClass("zoom")
+         .appendTo("body");
+        setTimeout(function(){
+         $("zoom").remove();
+        }, 1000);    
+    });
+</script>
+<script >
+bindEvents();
+
+class Item{
+constructor(id,pic,product,amount,quantity){
+this.id=id;
+this.pic=pic;
+this.product = product;
+
+this.amount = amount;
+this.quantity =quantity;
+this.markForDelete = false;
+	
+}
+	toggleDelete(){
+		this.markForDelete = !this.markForDelete;
+	}
+}
+
+const itemOperations = {
+itemList:[],
+	
+addItem(id,pic,product,amount){
+	var itemObject = new Item(id,pic, product, amount);
+	this.itemList.push(itemObject);
+	
+}
+	
+}
+
+function bindEvents() {
+
+	console.log("bindEvents working");
+	
+	var bTags=document.getElementsByTagName('button');
+        
+	
+    for (var i=0;i<bTags.length;i++){
+        bTags[i].addEventListener("click",add);
+    }
+
+}
+
+function saveLocal() {
+	if(window.localStorage){
+		localStorage.myitemslist=JSON.stringify(itemOperations.itemList);
+		//alert("Data Store...");
+	}
+	else{
+		alert("Ur Browser Doesn't Support LocalStorage...");
+	}
+}
+
+function add(event){
+	//tr.classList.toggle("redrow");
+	var id = event.srcElement.getAttribute("item-id");
+	var product = event.srcElement.getAttribute("product");
+	var amount = event.srcElement.getAttribute("amount");
+	var pic= event.srcElement.getAttribute("data-src");
+
+    //alert("data added");
+    itemOperations.addItem(id,pic,product,amount);
+    
+    //saveLocal();
+    saveLocal();
+	//alert("Delete Call.... "+id);
+}
+
+</script>
